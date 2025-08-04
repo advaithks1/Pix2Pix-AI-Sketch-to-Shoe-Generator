@@ -49,12 +49,11 @@ Pix2Pix AI Generator is a deep learning application that takes in edge-drawn ske
 ```
 Pix2Pix-AI-Shoe-Generator/
 ├── templates/
-│   └── index.html             # Main HTML interface
-├── static/                    # Static assets (optional)
-├── models/                    # Place model files here after receiving
-├── app.py                     # Flask application logic
-├── requirements.txt           # Python dependencies
-└── README.md                  # This file
+│   └── index.html             
+├── static/                    
+├── models/                    
+├── app.py                            
+└── README.md                  
 ```
 
 ---
@@ -63,19 +62,14 @@ Pix2Pix-AI-Shoe-Generator/
 
 ### 1. Clone the repository
 ```bash
-git clone https://github.com/yourusername/Pix2Pix-AI-Shoe-Generator.git
+git clone https://github.com/advaithks1/Pix2Pix-AI-Shoe-Generator.git
 cd Pix2Pix-AI-Shoe-Generator
 ```
 
-### 2. Install dependencies
-```bash
-pip install -r requirements.txt
-```
-
-### 3. Add model files  
+### 2. Add model files  
 Place `generator_final.h5` and `generator_epoch_24.h5` inside the `models/` directory. *(Request via email if not available)*
 
-### 4. Run the app
+### 3. Run the app
 ```bash
 python app.py
 ```
