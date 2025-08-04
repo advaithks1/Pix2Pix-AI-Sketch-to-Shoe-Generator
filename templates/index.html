@@ -1,0 +1,208 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Pix2Pix AI - Sketch to Shoe Generator</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <!-- Google Fonts + Material Icons -->
+    <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@400;700&family=Google+Sans:wght@400;700&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined" rel="stylesheet" />
+    <style>
+        :root {
+            --primary: #4285f4;
+            --primary-dark: #174ea6;
+            --surface: #fff;
+            --background: #f6f8fa;
+            --shadow: 0 2px 12px rgba(60,64,67,0.08);
+            --border-radius: 20px;
+            --transition: 0.18s cubic-bezier(.4,0,.2,1);
+        }
+        body {
+            min-height: 100vh;
+            margin: 0;
+            font-family: 'Google Sans', 'Roboto', Arial, sans-serif;
+            background: var(--background);
+            color: #21243d;
+        }
+        header {
+            background: var(--primary);
+            color: #fff;
+            padding: 32px 0 14px 0;
+            box-shadow: 0 4px 16px rgba(66,133,244,0.10);
+            text-align: center;
+        }
+        header h1 {
+            margin: 0;
+            font-size: 2.6em;
+            font-weight: 700;
+            letter-spacing: -1px;
+        }
+        header h2 {
+            margin: 10px 0 0 0;
+            font-size: 1.35em;
+            font-weight: 400;
+            opacity: 0.92;
+        }
+        .material-symbols-outlined {
+            font-size: 2.1em;
+            vertical-align: middle;
+            margin-right: 6px;
+        }
+        .container {
+            max-width: 1100px;
+            margin: 34px auto;
+            padding: 0 16px;
+        }
+        .card {
+            background: var(--surface);
+            border-radius: var(--border-radius);
+            box-shadow: var(--shadow);
+            padding: 38px 36px 32px 36px;
+            margin-bottom: 36px;
+            transition: box-shadow var(--transition);
+        }
+        .card:hover, .card:focus-within {
+            box-shadow: 0 8px 32px rgba(66,133,244,0.18);
+        }
+        form {
+            display: flex;
+            flex-wrap: wrap;
+            align-items: center;
+            gap: 18px;
+            justify-content: center;
+        }
+        .file-label {
+            display: flex;
+            align-items: center;
+            padding: 12px 22px;
+            background: #e3edfc;
+            color: var(--primary-dark);
+            border-radius: 8px;
+            font-size: 1.09em;
+            font-weight: 500;
+            cursor: pointer;
+            border: 1.5px solid #d1e5fd;
+            box-shadow: 0 1px 6px rgba(66,133,244,0.07);
+            transition: background var(--transition), box-shadow var(--transition);
+        }
+        .file-label:hover {
+            background: #d2e3fc;
+            box-shadow: 0 2px 10px rgba(66,133,244,0.11);
+        }
+        input[type="file"] {
+            display: none;
+        }
+        .submit-btn {
+            background: var(--primary);
+            color: #fff;
+            border: none;
+            padding: 12px 36px;
+            border-radius: 8px;
+            font-size: 1.05em;
+            font-weight: 700;
+            cursor: pointer;
+            letter-spacing: 0.07em;
+            box-shadow: 0 2px 10px rgba(66,133,244,0.08);
+            transition: background var(--transition), transform var(--transition);
+        }
+        .submit-btn:hover {
+            background: var(--primary-dark);
+            transform: translateY(-2px) scale(1.03);
+        }
+        .results-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
+            gap: 34px;
+            margin-top: 18px;
+        }
+        .result-card {
+            background: #f8fbff;
+            border-radius: 16px;
+            box-shadow: var(--shadow);
+            text-align: center;
+            padding: 24px 12px 26px 12px;
+            transition: box-shadow var(--transition), transform var(--transition);
+        }
+        .result-card:hover {
+            box-shadow: 0 6px 24px rgba(66,133,244,0.18);
+            transform: scale(1.04) translateY(-2px);
+        }
+        .result-title {
+            font-size: 1.08em;
+            margin-bottom: 14px;
+            color: var(--primary-dark);
+            font-weight: 600;
+        }
+        .result-img {
+            border-radius: 12px;
+            border: 2px solid #e6eefc;
+            background: #fff;
+            width: 100%;
+            max-width: 220px;
+            box-shadow: 0 2px 8px rgba(66,133,244,0.09);
+            transition: transform var(--transition);
+        }
+        .result-card:hover .result-img {
+            transform: scale(1.08) rotate(-1deg);
+        }
+        footer {
+            text-align: center;
+            padding: 40px 14px 24px 14px;
+            color: #8a90a2;
+            font-size: 1.05em;
+            letter-spacing: 0.03em;
+        }
+        @media (max-width: 800px) {
+            .card { padding: 18px 8px 20px 8px; }
+            .container { padding: 0 4px; }
+            .results-grid { gap: 16px; }
+            .result-img { max-width: 120px; }
+        }
+    </style>
+</head>
+<body>
+    <header>
+        <span class="material-symbols-outlined">auto_fix_high</span>
+        <h1>Pix2Pix AI Generator</h1>
+        <h2>Transform Sketches into Realistic Shoes with AI</h2>
+    </header>
+    <div class="container">
+        <div class="card">
+            <form method="post" enctype="multipart/form-data" autocomplete="off">
+                <label class="file-label">
+                    <span class="material-symbols-outlined">upload</span>
+                    Choose a Sketch
+                    <input type="file" name="sketch" accept="image/*" required>
+                </label>
+                <button class="submit-btn" type="submit">
+                    <span class="material-symbols-outlined" style="font-size:1.15em;vertical-align:middle;">magic_button</span>
+                    Generate
+                </button>
+            </form>
+            <div style="font-size:1em; color:#6b7d90; margin-top:22px; text-align:center; opacity:0.91;">
+                Supported: PNG, JPG &middot; Output is AI-generated using advanced neural networks
+            </div>
+        </div>
+        {% if sketch_img %}
+        <div class="results-grid">
+            <div class="result-card">
+                <div class="result-title">Input Sketch</div>
+                <img class="result-img" src="{{ sketch_img }}" alt="Input Sketch">
+            </div>
+            <div class="result-card">
+                <div class="result-title">Final Model Output</div>
+                <img class="result-img" src="{{ final_img }}" alt="Final Model Output">
+            </div>
+            <div class="result-card">
+                <div class="result-title">Best Model Output</div>
+                <img class="result-img" src="{{ best_img }}" alt="Best Model Output">
+            </div>
+        </div>
+        {% endif %}
+    </div>
+    <footer>
+        &copy; 2025 Pix2Pix AI Demo &mdash; Built with TensorFlow and Material Design<br>
+        <span style="font-size:0.95em;">Created by <b>Adu.ai</b></span>
+    </footer>
+</body>
+</html>
